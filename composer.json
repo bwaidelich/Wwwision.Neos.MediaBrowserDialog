@@ -1,0 +1,21 @@
+{
+    "description": "JavaScripts to provide asset selection via Media Browser in Neos Backend Modules",
+    "type": "neos-package",
+    "require": {
+        "neos/neos": "^7.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "name": "wwwision/neos-mediabrowserdialog",
+    "autoload": {
+        "psr-4": {
+            "Wwwision\\Neos\\MediaBrowserDialog\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Wwwision.Neos.MediaBrowserDialog"
+        }
+    }
+}
