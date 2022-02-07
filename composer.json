@@ -4,6 +4,7 @@
     "require": {
         "neos/neos": "^7.0"
     },
+    "license": "MIT",
     "require-dev": {
         "roave/security-advisories": "dev-latest"
     },
