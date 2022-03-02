@@ -23,6 +23,8 @@ Neos:
             additionalResources:
               javaScripts:
                 - 'resource://Wwwision.Neos.MediaBrowserDialog/Public/dist.js'
+              styleSheets:
+                  - 'resource://Wwwision.Neos.MediaBrowserDialog/Public/dist.css'
 ```
 
 With that in place, the following `data` attributes can be added to HTML elements in the module in order to include the
