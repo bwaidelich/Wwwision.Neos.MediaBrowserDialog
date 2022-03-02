@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 event.preventDefault();
                 const assetSources = 'assetConstraintsAssetSources' in container.dataset ? container.dataset.assetConstraintsAssetSources.split(',') : [];
                 const mediaTypes = 'assetConstraintsMediaTypes' in container.dataset ? container.dataset.assetConstraintsMediaTypes.split(',') : [];
-                const assetIdentifier = await browseAssets(assetSources, mediaTypes, container.dataset.asset);
+                const assetIdentifier = await browseAssets(assetSources, mediaTypes, container);
                 if (!assetIdentifier) {
                     return;
                 }
@@ -70,23 +70,33 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    async function browseAssets(assetSources, mediaTypes, assetIdentifier) {
+    async function browseAssets(assetSources, mediaTypes, container) {
         return new Promise(resolve => {
+            const assetIdentifier = container.dataset.asset;
             const url = assetIdentifier ? new URL('/neos/media/browser/images/edit.html?asset=' + assetIdentifier, window.location.origin) : new URL('/neos/media/browser/assets/index.html', window.location.origin);
             assetSources.map(assetSource => url.searchParams.append('constraints[assetSources][]', assetSource.trim()));
             mediaTypes.map(mediaType => url.searchParams.append('constraints[mediaTypes][]', mediaType.trim()));
-            // store reference of related input field, to be able to set value later via handleSelectedAssetCallback
-            const mediaBrowserPopup = window.open('', '', 'width=1280,height=720,menubar=no,location=no,addressbar=no');
-            mediaBrowserPopup.document.write('<html lang="en"><head><title>Media</title>');
-            // subscribe to assetChosen callback ( calling from within MediaBrowser iframe )
-            mediaBrowserPopup.document.write('<script>window.NeosMediaBrowserCallbacks={assetChosen:assetIdentifier => { this.dispatchEvent(new CustomEvent(\'assetChosen\', { detail: assetIdentifier })); window.close(); }};<\/script>');
-            mediaBrowserPopup.document.write('<body style="margin:0;">');
-            // render iframe with media browser
-            mediaBrowserPopup.document.write('<iframe name="neos-media-selection-screen" src="' + url.toString() + '" style="position:absolute;width:100%;height:100%;border-width:0;background-color:#222"/>');
-            mediaBrowserPopup.document.write('</body></html>');
-            mediaBrowserPopup.document.close();
-            mediaBrowserPopup.addEventListener('assetChosen', e => resolve(e.detail));
-            mediaBrowserPopup.addEventListener('beforeunload', _ => resolve(null));
+
+            const dialog = document.createElement('dialog');
+            dialog.style.padding = '0';
+            dialog.style.width = '90%';
+            dialog.style.height = '720px';
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('src', url.toString());
+            iframe.style.position = 'absolute';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.borderWidth = '0';
+            iframe.style.backgroundColor = '#222';
+            dialog.appendChild(iframe);
+            window.NeosMediaBrowserCallbacks={assetChosen:assetIdentifier => {
+                    resolve(assetIdentifier);
+                    dialog.close();
+                }};
+            dialog.addEventListener('cancel', e => resolve(null));
+            container.appendChild(dialog);
+            dialogPolyfill.registerDialog(dialog);
+            dialog.showModal();
         })
     }
 });
