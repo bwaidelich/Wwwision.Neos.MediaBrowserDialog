@@ -122,7 +122,7 @@ document.querySelectorAll('[data-asset]').forEach(container => {
 
 ## Acknowledgements
 
-The idea for this package and parts of the implementation are inspired by [Alois Rietzler](https://github.com/riea), thank you!
+The idea for this package and parts of the implementation are inspired by [Alois Rietzler](https://github.com/riea) from [brandung GmbH](https://brandung.de), thank you!
 
 ## Contribution
 
