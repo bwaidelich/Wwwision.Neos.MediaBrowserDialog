@@ -46,6 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const fieldElement = container.querySelector('[data-asset-field]');
         if (fieldElement) {
             fieldElement.value = hasAsset ? assetIdentifier : '';
+            fieldElement.disabled = !hasAsset;
         }
         container.querySelectorAll('[data-asset-hide-if-set]').forEach(element => element.style.display = hasAsset ? 'none' : '');
         container.querySelectorAll('[data-asset-hide-if-missing]').forEach(element => element.style.display = hasAsset ? '' : 'none');
