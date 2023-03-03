@@ -63,13 +63,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		if (!hasAsset) {
 			return;
 		}
-		assetIds.forEach(async assetId => {
+		assetIds.forEach(async (assetId, index) => {
 			const preview = previewTemplate.content.cloneNode(true);
 			const previewImageElement = preview.querySelector('img[data-asset-preview-image]');
 			const fieldElement = preview.querySelector('[data-asset-field]');
 			if (fieldElement) {
 				fieldElement.value = assetId;
 				fieldElement.disabled = false;
+				fieldElement.name = fieldElement.name.replace('[]', '[' + index + ']');
 			}
 			preview.querySelectorAll('[data-asset-replace]').forEach(replaceAssetElement => {
 				replaceAssetElement.addEventListener('click', event => {
