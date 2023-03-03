@@ -65,7 +65,6 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 		assetIds.forEach(async assetId => {
 			const preview = previewTemplate.content.cloneNode(true);
-			previewContainer.appendChild(preview);
 			const previewImageElement = preview.querySelector('img[data-asset-preview-image]');
 			const fieldElement = preview.querySelector('[data-asset-field]');
 			if (fieldElement) {
@@ -86,8 +85,9 @@ window.addEventListener('DOMContentLoaded', () => {
 					browseAssets(assetSources, mediaTypes, container);
 				});
 			});
-			const {label, previewUrl} = await loadAssetPreview(assetId);
 			const previewLabelElement = preview.querySelector('[data-asset-preview-label]');
+			previewContainer.appendChild(preview);
+			const {label, previewUrl} = await loadAssetPreview(assetId);
 			if (previewImageElement) {
 				previewImageElement.setAttribute('src', previewUrl);
 			}
