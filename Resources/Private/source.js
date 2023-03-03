@@ -63,14 +63,14 @@ window.addEventListener('DOMContentLoaded', () => {
 		if (!hasAsset) {
 			return;
 		}
-		assetIds.forEach(async (assetId, index) => {
+		assetIds.forEach(async assetId => {
 			const preview = previewTemplate.content.cloneNode(true);
+			previewContainer.appendChild(preview);
 			const previewImageElement = preview.querySelector('img[data-asset-preview-image]');
 			const fieldElement = preview.querySelector('[data-asset-field]');
 			if (fieldElement) {
 				fieldElement.value = assetId;
 				fieldElement.disabled = false;
-				fieldElement.name = fieldElement.name.replace('[]', '[' + index + ']');
 			}
 			preview.querySelectorAll('[data-asset-replace]').forEach(replaceAssetElement => {
 				replaceAssetElement.addEventListener('click', event => {
@@ -94,7 +94,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			if (previewLabelElement) {
 				previewLabelElement.textContent = label;
 			}
-			previewContainer.appendChild(preview);
 		});
 
 	}
