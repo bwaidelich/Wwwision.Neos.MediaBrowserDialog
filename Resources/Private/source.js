@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		if (!hasAsset) {
 			return;
 		}
-		assetIds.forEach(async assetId => {
+		assetIds.forEach(async (assetId, index) => {
 			const preview = previewTemplate.content.cloneNode(true);
 			const previewImageElement = preview.querySelector('img[data-asset-preview-image]');
 			const fieldElement = preview.querySelector('[data-asset-field]');
@@ -73,10 +73,39 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 			preview.querySelectorAll('[data-asset-replace]').forEach(replaceAssetElement => {
 				replaceAssetElement.addEventListener('click', event => {
+					event.preventDefault();
 					container.dataset.asset = assetIds.filter(idToRemove => idToRemove !== assetId).join(',');
 					toggleAssetPreview(container);
 				});
 			});
+			if (index === 0) {
+				preview.querySelectorAll('[data-asset-move-up]').forEach(moveAssetElement => moveAssetElement.style.display = 'none');
+			} else {
+				preview.querySelectorAll('[data-asset-move-up]').forEach(moveAssetElement => {
+					moveAssetElement.style.display = null;
+					moveAssetElement.addEventListener('click', event => {
+						event.preventDefault();
+						assetIds.splice(index, 1);
+						assetIds.splice(index - 1, 0, assetId);
+						container.dataset.asset = assetIds.join(',');
+						toggleAssetPreview(container);
+					});
+				});
+			}
+			if (index === assetIds.length - 1) {
+				preview.querySelectorAll('[data-asset-move-down]').forEach(moveAssetElement => moveAssetElement.style.display = 'none');
+			} else {
+				preview.querySelectorAll('[data-asset-move-down]').forEach(moveAssetElement => {
+					moveAssetElement.style.display = null;
+					moveAssetElement.addEventListener('click', event => {
+						event.preventDefault();
+						assetIds.splice(index, 1);
+						assetIds.splice(index + 1, 0, assetId);
+						container.dataset.asset = assetIds.join(',');
+						toggleAssetPreview(container);
+					});
+				});
+			}
 			preview.querySelectorAll('[data-asset-browse]').forEach(selectorElement => {
 				selectorElement.addEventListener('click', async event => {
 					event.preventDefault();
