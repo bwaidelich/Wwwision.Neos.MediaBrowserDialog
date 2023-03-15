@@ -43,8 +43,10 @@ Neos Media Browser and/or asset preview:
 | `asset-preview-container`         | Element that the `asset-preview-template` template will be added to, if an asset is selected (optional) | any element within the container                                  |
 | `asset-preview-label`             | Element will contain the label of the asset, if one is selected (optional)                              | any element within the container                                  |
 | `asset-preview-image`             | Element will render a preview of the asset, if one is selected (optional)                               | any `img` element within the container                            |
-| `asset-browse`                    | Element open the Media Browser on click (optional)                                                      | any element within the container that dispatches `click` events   |
-| `asset-replace`                   | Element unset a previously selected asset (optional)                                                    | any element within the container that dispatches `click` events   |
+| `asset-browse`                    | Element will open the Media Browser on click (optional)                                                 | any element within the container that dispatches `click` events   |
+| `asset-replace`                   | Element will unset a previously selected asset (optional)                                               | any element within the container that dispatches `click` events   |
+| `asset-move-up`                   | Element will move the selected asset one position up (optional, only for asset lists)                   | any element within the container that dispatches `click` events   |
+| `asset-move-down`                 | Element will move the selected asset one position down (optional, only for asset lists)                 | any element within the container that dispatches `click` events   |
 
 ### Example
 
@@ -112,7 +114,7 @@ Asset sources (see [Asset Constraints](https://neos.readthedocs.io/en/stable/Ref
 
 #### Example 02 (Multiple images upload, Fluid)
 
-The following example, renders a list of `{images}` as preview image. Next to every image, a delete button is shown that removes the specific asset from the list.
+The following example, renders a list of `{images}` as preview image. Next to every image, move buttons are shown and a delete button is shown that removes the specific asset from the list.
 Underneath the list, a Browse button allows to select additional images and finally the whole list can be emptied with an additional button:
 
 ```html
@@ -125,7 +127,13 @@ Underneath the list, a Browse button allows to select additional images and fina
       <h2 data-asset-preview-label></h2>
       <img data-asset-preview-image />
       <f:form.hidden name="images[]" data="{asset-field: true}" additionalAttributes="{disabled: true}" />
-      <a data-asset-replace href="#" class="neos-button" title="Remove this image">
+      <a data-asset-move-up href="#" class="neos-button" title="Move this image one position up">
+        <i class="fas fa-arrow-up icon-white"></i>
+      </a>
+      <a data-asset-move-down href="#" class="neos-button" title="Move this image one position down">
+        <i class="fas fa-arrow-down icon-white"></i>
+      </a>
+      <a data-asset-replace href="#" class="neos-button neos-button-danger" title="Remove this image">
         <i class="fas fa-eraser icon-white"></i>
       </a>
     </div>
