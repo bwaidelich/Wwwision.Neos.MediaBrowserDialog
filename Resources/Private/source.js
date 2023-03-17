@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	async function toggleAssetPreview(container) {
-		const assetIds = container.dataset.asset.split(',').filter(e => e.length > 0);
+		const assetIds = getAssetIds(container);
 		const hasAsset = assetIds.length > 0;
 		const fieldElement = container.querySelector('[data-asset-field]');
 		if (fieldElement) {
@@ -127,6 +127,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	}
 
+	function getAssetIds(container) {
+		return container.dataset.asset.split(',').filter(e => e.length > 0);
+	}
+
 	function browseAssets(assetSources, mediaTypes, container) {
 
 		const multiple = container.dataset.assetMultiple !== undefined;
@@ -160,6 +164,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		window.NeosMediaBrowserCallbacks = {
 			assetChosen: assetIdentifier => {
+				const assetIds = getAssetIds(container);
+				if (assetIds.includes(assetIdentifier)) {
+					return;
+				}
 				container.dispatchEvent(new CustomEvent('assetChosen', {detail: assetIdentifier}));
 				if (!multiple) {
 					dialog.close();
