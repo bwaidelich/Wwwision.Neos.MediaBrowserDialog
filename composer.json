@@ -2,7 +2,7 @@
     "description": "JavaScripts to provide asset selection via Media Browser in Neos Backend Modules",
     "type": "neos-package",
     "require": {
-        "neos/neos": "^7.0 || ^8.0"
+        "neos/neos": "^7.0 || ^8.0 || ^9.0 || dev-master"
     },
     "license": "MIT",
     "require-dev": {
