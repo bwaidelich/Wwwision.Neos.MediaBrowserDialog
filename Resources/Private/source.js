@@ -135,7 +135,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		const multiple = container.dataset.assetMultiple !== undefined;
 		const assetIdentifier = container.dataset.asset;
-		const url = assetIdentifier && !multiple ? new URL('/neos/media/browser/images/edit.html?asset=' + assetIdentifier, window.location.origin) : new URL('/neos/media/browser/assets/index.html', window.location.origin);
+		const mediaBrowserUriPath = container.dataset.assetMediaBrowserUriPath || '/neos/media/browser';
+		const url = assetIdentifier && !multiple ? new URL(mediaBrowserUriPath + '/images/edit.html?asset=' + assetIdentifier, window.location.origin) : new URL(mediaBrowserUriPath + '/assets/index.html', window.location.origin);
 		assetSources.map(assetSource => url.searchParams.append('constraints[assetSources][]', assetSource.trim()));
 		mediaTypes.map(mediaType => url.searchParams.append('constraints[mediaTypes][]', mediaType.trim()));
 
