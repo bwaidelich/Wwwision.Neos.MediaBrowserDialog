@@ -36,7 +36,7 @@ Neos Media Browser and/or asset preview:
 | `asset-constraints-media-types`   | Comma separated list of allowed mediaTypes (optional)                                                   | container                                                         |
 | `asset-constraints-asset-sources` | Comma separated list of allowed asset sources (optional)                                                | container                                                         |
 | `asset-multiple`                  | If set, multiple assets can be added (optional)                                                         | container                                                         |
-| `asset-media-browser-uri-path`    | Will change the uri path for the media browser. I.e. necessary when working with subfolders             | container                                                         |
+| `asset-neos-uri-path`             | Will change the uri path. I.e. necessary when working with subfolders                                   | container                                                         |
 | `asset-hide-if-set`               | Element will be hidden if an asset is selected (optional)                                               | any element within the container                                  |
 | `asset-hide-if-missing`           | Element will be hidden if no asset is selected (optional)                                               | any element within the container                                  |
 | `asset-field`                     | Element value will contain the identifier of the selected field (optional)                              | any input form field within the container, usually a hidden field |

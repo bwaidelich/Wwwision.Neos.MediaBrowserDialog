@@ -901,8 +901,9 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function loadAssetPreview(assetIdentifier) {
-        const response = await fetch(`/neos/service/assets/${assetIdentifier}`);
+    async function loadAssetPreview(assetIdentifier, container) {
+        const neosUriPath = container.dataset.assetNeosUriPath || '/neos';
+        const response = await fetch(neosUriPath + `/service/assets/${assetIdentifier}`);
         const html = await response.text();
         const parser = new DOMParser();
         const dom = parser.parseFromString(html, 'text/html');
@@ -982,7 +983,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             const previewLabelElement = preview.querySelector('[data-asset-preview-label]');
             previewContainer.appendChild(preview);
-            const {label, previewUrl} = await loadAssetPreview(assetId);
+            const {label, previewUrl} = await loadAssetPreview(assetId, container);
             if (previewImageElement) {
                 previewImageElement.setAttribute('src', previewUrl);
             }
@@ -1001,8 +1002,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
         const multiple = container.dataset.assetMultiple !== undefined;
         const assetIdentifier = container.dataset.asset;
-        const mediaBrowserUriPath = container.dataset.assetMediaBrowserUriPath || '/neos/media/browser';
-        const url = assetIdentifier && !multiple ? new URL(mediaBrowserUriPath + '/images/edit.html?asset=' + assetIdentifier, window.location.origin) : new URL(mediaBrowserUriPath + '/assets/index.html', window.location.origin);
+        const neosUriPath = container.dataset.assetNeosUriPath || '/neos';
+        const url = assetIdentifier && !multiple ? new URL(neosUriPath + '/media/browser/images/edit.html?asset=' + assetIdentifier, window.location.origin) : new URL(neosUriPath + '/media/browser/assets/index.html', window.location.origin);
         assetSources.map(assetSource => url.searchParams.append('constraints[assetSources][]', assetSource.trim()));
         mediaTypes.map(mediaType => url.searchParams.append('constraints[mediaTypes][]', mediaType.trim()));
 
